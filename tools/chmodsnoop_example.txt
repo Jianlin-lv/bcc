@@ -1,0 +1,15 @@
+# ./chmodsnoop.py -h
+Tracing chmod ... Hit Ctrl-C to end
+USER-NS       CGROUP-NS     PID      COMM             MOD      PATH
+4026531837    4026531836    728      dockerd          644      .tmp-hostconfig.json266002737
+4026531837    4026531836    728      dockerd          644      .tmp-hostconfig.json993773707
+4026531837    4026531836    658      systemd-network  644      .#stateHJkhjY
+4026531837    4026531836    658      systemd-network  644      .#301wCMvY
+4026531837    4026531836    658      systemd-network  644      .#stateh06hqY
+4026531837    4026531836    660      systemd-resolve  644      .#stub-resolv.conf7fRiY8
+4026531837    4026531836    28312    systemd-udevd    644      .#n31dxh0K0
+4026531837    4026532341    28336    runc:[2:INIT]    755      /
+4026531837    4026532341    28336    runc:[2:INIT]    555      /
+4026531837    4026531836    28130    chmod            666      cilium-policy-100.pcap
+
+
