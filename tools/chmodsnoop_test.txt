@@ -1,41 +1,30 @@
 jianlin@net-x86-dell-01:~/code/github/jianlin/bcc$ uname -a
 Linux net-x86-dell-01 5.4.0-72-generic #80-Ubuntu SMP Mon Apr 12 17:35:00 UTC 2021 x86_64 x86_64 x86_64 GNU/Linux
-jianlin@net-x86-dell-01:~/code/github/jianlin/bcc$ sudo ./tools/chmodsnoop.py
+jianlin@net-x86-dell-01:~/code/github/jianlin/bcc/tools$ sudo ./chmodsnoop.py
 Tracing chmod ... Hit Ctrl-C to end
 CGROUP-NS     NET-NS        PID      COMM             MOD      PATH
-4026531835    4026532056    2917774  chmod            777      push_manifest.sh
-4026531835    4026532056    2918488  chmod            777      push_manifest.sh
-4026531835    4026532056    2918489  chmod            777      push_manifest.sh
-4026531835    4026532056    1413101  dockerd          644      .tmp-hostconfig.json134583939
-4026531835    4026532056    1413101  dockerd          644      .tmp-hostconfig.json588822957
-4026531835    4026532056    1413101  dockerd          600      .tmp-config.v2.json814777350
-4026531835    4026532056    1413101  dockerd          644      .tmp-hostconfig.json519257703
-4026531835    4026532056    1413101  dockerd          600      .tmp-config.v2.json678458664
-4026531835    4026532056    755      systemd-network  644      .#stateX3ESZj
-4026531835    4026532056    755      systemd-network  644      .#30h8D9Ah
-4026531835    4026532056    755      systemd-network  644      .#stateF9GsMh
-4026531835    4026532056    755      systemd-network  644      .#31Ujjoji
-4026531835    4026532056    755      systemd-network  644      .#stateLMm0ah
-4026531835    4026532056    755      systemd-network  644      .#31Z2oVsj
-4026531835    4026532056    1066     systemd-resolve  644      .#resolv.confa7zfnN
-4026531835    4026532056    1066     systemd-resolve  644      .#stub-resolv.confso3rRM
-4026531835    4026532056    1066     systemd-resolve  644      .#resolv.conf2AhP0O
-4026531835    4026532056    1066     systemd-resolve  644      .#stub-resolv.conf39KRLL
-4026531835    4026532056    2919031  systemd-udevd    644      .#n30H4leyB
-4026531835    4026532056    2919032  systemd-udevd    644      .#n31wMZ4TH
-4026531835    4026532056    1413101  dockerd          644      hash431877786
-4026531835    4026532056    1413101  dockerd          644      .tmp-hostconfig.json234477873
-4026531835    4026532056    755      systemd-network  644      .#stateAkTUyh
-4026531835    4026532056    755      systemd-network  644      .#30elbiRf
-4026531835    4026532056    755      systemd-network  644      .#statezOXuWj
-4026531835    4026532056    755      systemd-network  644      .#318heiWg
-4026531835    4026532056    1066     systemd-resolve  644      .#resolv.conf5gHaFO
-4026531835    4026532056    1066     systemd-resolve  644      .#stub-resolv.confowK6RP
-4026531835    4026532056    2919042  containerd-shim  600      e584c60f63405439b3d7d442c3fc6e610d1d55bc2cbc0e7d8fcbef8ad7cef4a6
-4026531835    4026532056    1066     systemd-resolve  644      .#resolv.confePaWkM
-4026531835    4026532056    1066     systemd-resolve  644      .#stub-resolv.confOblXrP
-4026531835    4026533199    2919079  runc:[2:INIT]    755      /
-4026531835    4026533199    2919079  runc:[2:INIT]    555      /
-4026531835    4026532056    1        systemd          644      .#50-DevicePolicy.confivsusi
-4026531835    4026532056    1        systemd          644      .#50-DeviceAllow.conffhsNff
+4026531835    4026532056    3789263  chmod            775      /home/jianlin/golang_install.sh
+4026531835    4026532056    3789264  chmod            777      /home/jianlin/push_manifest.sh
+4026531835    4026532056    3789368  chmod            777      /home/jianlin/push_manifest.sh
+4026531835    4026532056    3789785  chmod            775      /tmp/ccUvEA0Q.cdtor.o
+4026531835    4026532056    1413101  dockerd          644      /var/lib/docker/containers/047c055cf1c5df28bb218245748489bb/.tmp-hostconfig.json371696132
+4026531835    4026532056    1413101  dockerd          644      /var/lib/docker/containers/047c055cf1c5df28bb218245748489bb/.tmp-hostconfig.json877580758
+4026531835    4026532056    1413101  dockerd          600      /var/lib/docker/containers/047c055cf1c5df28bb218245748489bb/.tmp-config.v2.json097632659
+4026531835    4026532056    1413101  dockerd          644      /var/lib/docker/containers/047c055cf1c5df28bb218245748489bb/.tmp-hostconfig.json834545528
+4026531835    4026532056    1413101  dockerd          600      /var/lib/docker/containers/047c055cf1c5df28bb218245748489bb/.tmp-config.v2.json927539517
+4026531835    4026532056    755      systemd-network  644      /netif/links/.#32d6MbKj
+4026531835    4026532056    755      systemd-network  644      ////
+4026531835    4026532056    755      systemd-network  644      /systemd/resolve/.#stub-resolv.conf71OLKM
+4026531835    4026532056    755      systemd-network  644      /systemd/netif/links/.#33tiBMMh
+4026531835    4026532056    755      systemd-network  644      //data/.#n33kSFcqC
+4026531835    4026532056    755      systemd-network  644      ////
+4026531835    4026532056    1066     systemd-resolve  644      ///
+4026531835    4026532056    1066     systemd-resolve  644      /systemd/resolve/.#stub-resolv.confotjE6M
+4026531835    4026532056    1066     systemd-resolve  644      ///
+4026531835    4026532056    1066     systemd-resolve  644      ///
+4026531835    4026532056    3789885  systemd-udevd    644      ///
+4026531835    4026532056    3789886  systemd-udevd    644      ///
+4026531835    4026532056    1413101  dockerd          644      /var/lib/docker/containers/047c055cf1c5df28bb218245748489bb/hash470853751
+4026531835    4026532056    1413101  dockerd          644      /var/lib/docker/containers/047c055cf1c5df28bb218245748489bb/.tmp-hostconfig.json135180650
+4026531835    4026532056    755      systemd-network  644      /netif/links/.#339dFISf
 

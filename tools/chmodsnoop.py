@@ -28,19 +28,45 @@ bpf_text = """
 #include <linux/pid_namespace.h>
 #include <net/net_namespace.h>
 
-#define MAX_PATH 128
+#define DENTRY_MAX_NUM 10
+
+struct dentry_buff{
+    char dentry_name[DNAME_INLINE_LEN];
+};
+
+BPF_ARRAY(path_map, struct dentry_buff, DENTRY_MAX_NUM);
 
 struct data_t {
     u32 pid;
     u32 netns_inum;
     u32 cgroupns_inum;
     u32 pidns_inum;
+    u32 dentry_inum;
     unsigned short mode;
     char comm[TASK_COMM_LEN];
-    char path[MAX_PATH];
 };
 
 BPF_PERF_OUTPUT(events);
+
+static inline int get_path(struct dentry **pdent, struct inode **pinode, struct data_t *data)
+{
+    struct dentry_buff dentry_tmp = {};
+
+    if(data->dentry_inum < DENTRY_MAX_NUM && (*pinode && (*pinode)->i_ino != 2 && (*pinode)->i_ino != 1))
+    {
+        bpf_probe_read_kernel(dentry_tmp.dentry_name, DNAME_INLINE_LEN, (*pdent)->d_name.name);
+        path_map.update(&data->dentry_inum, &dentry_tmp);
+
+        if(((*pdent)->d_parent))
+        {
+           *pdent = (*pdent)->d_parent;
+           *pinode = (*pdent)->d_inode;
+        }
+        data->dentry_inum++;
+        return 1;
+    }
+    return 0;
+}
 
 int trace_chmod_common(struct pt_regs *ctx)
 {
@@ -66,8 +92,25 @@ int trace_chmod_common(struct pt_regs *ctx)
 
     // Get file name
     path = (const struct path *)PT_REGS_PARM1(ctx);
-    bpf_probe_read_kernel(&data.path, sizeof(data.path), path->dentry->d_name.name);
 
+    struct dentry *pdent = path->dentry;
+    struct inode *pinode = path->dentry->d_inode;
+    data.dentry_inum = 0;
+
+    //unroll loop, Max directory 10
+    if(!get_path(&pdent, &pinode, &data)) goto submit;
+    if(!get_path(&pdent, &pinode, &data)) goto submit;
+    if(!get_path(&pdent, &pinode, &data)) goto submit;
+    if(!get_path(&pdent, &pinode, &data)) goto submit;
+    if(!get_path(&pdent, &pinode, &data)) goto submit;
+    if(!get_path(&pdent, &pinode, &data)) goto submit;
+    if(!get_path(&pdent, &pinode, &data)) goto submit;
+    if(!get_path(&pdent, &pinode, &data)) goto submit;
+    if(!get_path(&pdent, &pinode, &data)) goto submit;
+    if(!get_path(&pdent, &pinode, &data)) goto submit;
+
+
+submit:
     events.perf_submit(ctx, &data, sizeof(struct data_t));
 
     return 0;
@@ -86,8 +129,15 @@ print("%-13s %-13s %-8s %-16s %-8s %-16s" % ("CGROUP-NS", "NET-NS", "PID", "COMM
 # process event
 def print_event(cpu, data, size):
     event = b["events"].event(data)
-    printb(b"%-13d %-13d %-8d %-16s %-8o %-16s" % (event.cgroupns_inum, event.netns_inum, event.pid, event.comm, event.mode, event.path))
+    printb(b"%-13d %-13d %-8d %-16s %-8o " % (event.cgroupns_inum, event.netns_inum, event.pid, event.comm, event.mode), nl="")
 
+    path_table = b.get_table("path_map")
+    for index in range(event.dentry_inum-1, -1, -1):
+        dir = path_table.__getitem__(index)
+        printb(b"/%s" % (dir.dentry_name), nl="")
+
+    printb(b"")
+    b["path_map"].clear()
 
 # loop with callback to print_event
 b["events"].open_perf_buffer(print_event)
@@ -96,4 +146,3 @@ while 1:
         b.perf_buffer_poll()
     except KeyboardInterrupt:
         exit()
-
