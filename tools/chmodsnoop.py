@@ -36,6 +36,8 @@ struct dentry_buff{
 
 BPF_ARRAY(path_map, struct dentry_buff, DENTRY_MAX_NUM);
 
+
+
 struct data_t {
     u32 pid;
     u32 netns_inum;
@@ -129,7 +131,7 @@ print("%-13s %-13s %-8s %-16s %-8s %-16s" % ("CGROUP-NS", "NET-NS", "PID", "COMM
 # process event
 def print_event(cpu, data, size):
     event = b["events"].event(data)
-    printb(b"%-13d %-13d %-8d %-16s %-8o " % (event.cgroupns_inum, event.netns_inum, event.pid, event.comm, event.mode), nl="")
+    printb(b"%-13u %-13u %-8d %-16s %-8o " % (event.cgroupns_inum, event.netns_inum, event.pid, event.comm, event.mode), nl="")
 
     path_table = b.get_table("path_map")
     for index in range(event.dentry_inum-1, -1, -1):

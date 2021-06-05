@@ -47,6 +47,7 @@ APPS = \
 	tcpconnlat \
 	vfsstat \
 	xfsslower \
+	chmodsnoop \
 	#
 
 COMMON_OBJ = \

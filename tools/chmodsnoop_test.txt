@@ -28,3 +28,13 @@ CGROUP-NS     NET-NS        PID      COMM             MOD      PATH
 4026531835    4026532056    1413101  dockerd          644      /var/lib/docker/containers/047c055cf1c5df28bb218245748489bb/.tmp-hostconfig.json135180650
 4026531835    4026532056    755      systemd-network  644      /netif/links/.#339dFISf
 
+
+
+#CO-RE  test
+
+jianlin@jianlin-x86:~/code/bcc/libbpf-tools$ sudo ./chmodsnoop
+Tracing chmod ... Hit Ctrl-C to end
+CGROUP-NS     NET-NS        PID      COMM             MOD      PATH
+4026531835    4026531992    3335     chmod            777      /home/jianlin/code/llvm-project
+4026531835    4026531992    3335     chmod            777      /home/jianlin/code/llvm.sh
+
